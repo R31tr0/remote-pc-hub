@@ -1,0 +1,68 @@
+/* Основной контейнер модалки (центрирование) */
+.ModalMain {
+  position: fixed;
+  top: 600%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+
+/* Кнопка закрытия (крестик) */
+.close-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.closebutton {
+  cursor: pointer;
+  color: var(--text-dim);
+  font-family: sans-serif;
+  font-weight: bold;
+  transition: var(--transition);
+}
+
+.closebutton:hover {
+  color: #ef4444; 
+}
+
+
+.input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* Контейнер кнопки */
+.Button {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* Сама кнопка "add" */
+.addbutton {
+  background: var(--accent-purple);
+  color: white;
+  padding: 10px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.addbutton:hover {
+  filter: brightness(1.2);
+  box-shadow: 0 0 15px var(--accent-glow);
+}

@@ -1,0 +1,107 @@
+.background {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--bg-color, #121214); /* Основной черный фон */
+  color: var(--text-main, #ffffff);
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Создаем эффект фиолетовой дымки снизу */
+.background::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30vh; /* Высота дымки */
+  background: linear-gradient(
+    to top, 
+    var(--fog-color, rgba(124, 77, 255, 0.4)), 
+    transparent
+  );
+  filter: blur(40px); /* Размытие */
+  pointer-events: none; /* Чтобы не мешала кликать по ссылке */
+  z-index: 0;
+}
+
+/* Ссылка поверх дымки */
+.background a {
+  z-index: 1;
+  font-weight: bold;
+  padding: 10px 20px;
+  position: absolute;
+  background-color: var(--accent-purple, #7c4dff); 
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.background a:hover {
+  background-color: var(--accent-hover, #9e7aff);
+}
+
+/* Контент поверх дымки */
+.background h1, .background p {
+  z-index: 1;
+  position: relative;
+}
+/* 404 текст */
+.erroritem{ 
+  position: absolute;
+  display: flex;
+  gap: 10px;
+  top: 150px;
+  left:400px;
+  font-family: 'MyCustomFont'
+}
+.text {
+  position: absolute;
+  text-align: center;
+  /* Вместо left: 280px делаем так: */
+  left: 50%;
+  top: 250px;
+  transform: translateX(-50%); /* Идеально центрирует по горизонтали */
+  font-family: 'MyCustomFont', sans-serif;
+  width: 100%; /* Чтобы текст мог центрироваться внутри себя */
+}
+
+.button {
+  position: absolute;
+  left: 50%;
+  top: 450px;
+  transform: translateX(-50%);
+}
+/* Базовые стили (Mobile First) */
+.main-container {
+  width: 100%;
+  padding: 0 15px; /* Немного отступа для самых маленьких экранов */
+}
+
+/* Смартфоны и планшеты (480px и выше) */
+@media screen and (min-width: 480px) {
+  .main-container {
+    padding: 0 20px; /* Увеличиваем отступы, когда места стало больше */
+  }
+}
+
+/* Десктопы (1024px и выше) */
+@media screen and (min-width: 1024px) {
+  .main-container {
+    max-width: 960px;
+    margin: 0 auto;
+    /* Padding здесь уже не нужен, так как max-width и margin auto центрируют контент */
+  }
+}
+@font-face {
+  font-family: 'MyCustomFont';
+  /* Исправлен format на truetype */
+  src: url('./fonts/SonicPressStartButton[NolivantNTEdit]-Regular.ttf') format('truetype');
+  font-weight: normal; /* Если шрифт один, лучше ставить normal */
+  font-style: normal;
+  font-display: swap;
+}
