@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5173',
+  baseURL: 'http://localhost:5173',//бек адресс хз какой порт
   withCredentials: true
 });
 api.interceptors.request.use((config) => {

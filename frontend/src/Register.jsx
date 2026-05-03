@@ -3,14 +3,14 @@ import { useState } from 'react';
 import api from './axiosapi/api';
 import './styles/Register.css';
 import { motion } from 'framer-motion'; 
-import { Routes, Route, Link } from 'react-router-dom'; 
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'; 
 import LoginForm from './Login'
 import Dashboard from './Dashboard'
 import Errorpage from './Errorpage'
 const RegisterForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    
+    const navigate = useNavigate();
     const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { 
@@ -23,9 +23,9 @@ const RegisterForm = () => {
  const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const response = await api.post('localhost/api/v1/auth',{ username, password })
+      const response = await api.post('/api/v1/auth',{ username, password })
         if (response.data.accessToken) {
-          localStorage.setItem('access_token',data.accessToke)
+          localStorage.setItem('access_token',response.data.accessToken)
           navigate('/dashboard'); 
     }
     }catch(err){
