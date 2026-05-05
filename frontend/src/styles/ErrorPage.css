@@ -64,7 +64,7 @@
   text-align: center;
   /* Вместо left: 280px делаем так: */
   left: 50%;
-  top: 250px;
+  top: 270px;
   transform: translateX(-50%); /* Идеально центрирует по горизонтали */
   font-family: 'MyCustomFont', sans-serif;
   width: 100%; /* Чтобы текст мог центрироваться внутри себя */

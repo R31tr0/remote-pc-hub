@@ -4,18 +4,19 @@ import { Settings, Monitor, RefreshCw ,Upload} from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useStore } from './store';
 import NewConectionModal from './components/NewConectionModal';
+import api from './axiosapi/api';
 const Dashboard = () => {
 
 //память о текущем пк
   const pcinfo = useStore((state) => state.pcinfo);
+  const setPcInfo = useStore((state) => state.setPcInfo);
 //память о текущем пк
 
 
   // Состояние для чего либо
-const [activeMachine, setActiveMachine] = useState(null);
-const [ping, setPing] = useState(null);
-const [storage, setStorage] = useState(null);
-const [Files,setfiles] = useState(null);
+// const [activeMachine, setActiveMachine] = useState(null);
+// const [ping, setPing] = useState(null);
+// const [storage, setStorage] = useState(null); дублирование ненужного состояния 
 const [open, setOpen] = useState(false);
 const handleClose = () => setOpen(false);
 //
@@ -53,21 +54,44 @@ setOpen(true);
 
 
 //блок работы с сервером
-//все файлы системы 
-const allfiles = async () =>{
-      setfiles(pcinfo.files);
-}
+// пока что удалил работу с файлами вообще
+// после того как юзер поддклбчился пк данные подтянутся 1 раз при загрузке потом пинг и память должны обновлятся 
+
+useEffect(() => {
+  if (!pcinfo.id) return;
+  // Функция, которая делает запрос
+  const updateStats = async () => {
+    try {
+      // Представим, что бэк отдает { ping: 45, storage: "111/10000", pc: "Hui-PC" }
+      const response = await api.get(`/api/v1/pc/${pcinfo.id}/stats`);
+      setPcInfo(response.data); // Просто закидываем всё в стор
+    } catch (err) {
+      console.error("Сервер поел кала", err);
+    }
+  };
+
+  // Вызываем сразу при загрузке
+  updateStats();
+
+  // Запускаем цикл каждые 30 секунд
+  const interval = setInterval(updateStats, 30000);
+
+  return () => clearInterval(interval);
+}, [pcinfo, pcinfo.id]);
+
+
 
 // 1. Функция выбора ПК
 const selectMachine = async () => {
-      setActiveMachine(pcinfo.pc); // Вызываем функцию и передаем данные
+      setActiveMachine(pcinfo.pc); // Вызываем функцию и передаем данные имя машины
 };
 
 // 2. Функция замера пинга
 const fetchPing = async () => {
-      setPing(pcinfo.ping); // Обновляем состояние пинга
+      setPing(pcinfo.ping); // Обновляем состояние пинга 
 };
-//3. функция памяти 
+//3. функция памяти  передаем общую память 
+//так же нужно продумать как память будет обновлятся по мере поступления новых файлов или наоборот 
 
 const pcstorage = async()=>{
   setStorage(pcinfo.storage)
@@ -128,8 +152,9 @@ const pcstorage = async()=>{
         {/* ВЕРХНЯЯ ПАНЕЛЬ */}
         <header className="top-bar">
           <div className="path-display">
-            <span className="root">{activeMachine}</span>
             <span className="separator">/</span>
+            <span className="root">{pcinfo.pc}</span>
+           
             
           </div>
           <div className="header-actions">
@@ -146,11 +171,11 @@ const pcstorage = async()=>{
           <section className="stats-grid">
             <div className="card stat-card">
               <span className="card-label">Latency</span>
-              <div className="card-value">{ping}</div>
+              <div className="card-value">{pcinfo.ping}</div>
             </div>
             <div className="card stat-card">
               <span className="card-label">storage</span>
-              <div className="card-value">{storage}</div>
+              <div className="card-value">{pcinfo.storage}</div>
             </div>
             <div className="card drop-zone">
               <Upload size={48} className="upload-icon" />

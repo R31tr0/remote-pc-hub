@@ -34,10 +34,10 @@ const setPcInfo = useStore((state) => state.setPcInfo);
         // Обновляем состояние объекта целиком
         setPcInfo({
           ping: response.data.ping,
+          id: pcId,
           storage: response.data.storage,
-          files: response.data.files,
         });
-        console.log('Данные инхронизированы');
+        console.log('Данные инхронизированы с ID:', pcId);
         onClose();  
       }
     }

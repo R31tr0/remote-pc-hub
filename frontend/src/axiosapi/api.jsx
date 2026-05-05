@@ -9,7 +9,7 @@ const token = localStorage.getItem('access_token')
   if(token){
      config.headers.Authorization = `Bearer ${token}`;
   }else{
-    console.log ('токен не валиден')
+    console.log ('ошибка получения токена')
   }
   return config
 })
