@@ -37,7 +37,12 @@
 
 ## 🏗 Архитектура проекта
 
-Приложение состоит из двух независимых сервисов (Monorepo / Decoupled):
+Приложение состоит из двух независимых сервисов :
+
+
+##Collaborators
+(@R31tr0) — Frontend
+(@SaymonGrapes) — Backend
 
 ```text
 remote-pc-hub/
@@ -46,5 +51,4 @@ remote-pc-hub/
 
 
 
-(@R31tr0) — Frontend 
-(@SaymonGrapes) — Backend 
+
