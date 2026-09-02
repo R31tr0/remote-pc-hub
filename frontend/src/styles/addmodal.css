@@ -1,0 +1,95 @@
+/* Основной контейнер модалки (центрирование) */
+.ModalMain {
+  position: fixed; /* Чтобы окно не зависело от прокрутки страницы */
+  top: 50%;        /* Сдвигаем верхний край на середину экрана */
+  left: 50%;       /* Сдвигаем левый край на середину экрана */
+  
+  /* ЭТО КРИТИЧЕСКИ ВАЖНО: возвращаем модалку назад на половину ее собственной ширины и высоты */
+  transform: translate(-50%, -50%) !important; 
+  
+  z-index: 1000;   /* Чтобы модалка была поверх всего остального интерфейса */
+  
+  /* Твой ширины/высоты и неоновые стили оставляй как есть, например: */
+  width: 450px;
+  max-width: 90%;
+  background: #0d0e12; 
+  border: 1px solid var(--accent-purple);
+  
+  padding: 25px;
+  border-radius: 12px;
+}
+/* Кнопка закрытия (крестик) */
+.close-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.closebutton {
+  cursor: pointer;
+  color: var(--text-dim);
+  font-family: sans-serif;
+  font-weight: bold;
+  transition: var(--transition);
+}
+
+.closebutton:hover {
+  color: #ef4444; 
+}
+
+
+.input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* Контейнер кнопки */
+.Button {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* Сама кнопка "add" */
+.addbutton {
+  background: var(--accent-purple);
+  color: white;
+  padding: 10px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.addbutton:hover {
+  filter: brightness(1.2);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.deletebutton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1001;
+  background: var(--accent-purple);
+  color: #fff;
+  padding: 8px 18px;
+  min-width: 140px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.deletebutton:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 0 15px rgba(127, 29, 29, 0.666);
+}

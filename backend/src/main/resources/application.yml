@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: RemotePcHub
+
+  datasource:
+    url: jdbc:postgresql://localhost:5431/postgres
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  jwt:
+    secret: my-super-super-super-super-secret-key
+    accessTokenExpiration: 900 # 15m
+    refreshTokenExpiration: 604800 # 7d

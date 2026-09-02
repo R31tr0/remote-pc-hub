@@ -1,0 +1,249 @@
+body {
+  background-color: #0c0a12;
+  margin: 0;
+  
+}
+
+* {
+ 
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: #0c0a12;
+  margin: 0;
+  
+  color: #cdd6f4;
+}
+
+.options-wrapper {
+  display: flex;
+  margin-top: 50px;
+  align-items: flex-start;
+}
+
+.options-containeer {
+  background-color: #11111b;
+  border: 1px solid #313244;
+  height: 700px;
+  width: 320px;
+  border-radius: 15px;
+  flex-shrink: 0;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Выравнивает обе карточки по центру экрана */
+  margin-left: 250px;
+}
+
+.options-containeer--wide {
+  width: 800px;
+  
+}
+
+/* === Левая панель === */
+.panel-title {
+  font-size: 20px;
+  margin: 0 0 20px 0;
+  color: #f3f4f6;
+}
+
+.settings-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  color: #a6adc8;
+  padding: 12px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.nav-item:hover {
+  background-color: #181825;
+  color: #f3f4f6;
+}
+
+.nav-item.active {
+  background-color:  var(--accent-purple);;
+  color: #ffffff;
+  font-weight: 500;
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.35);
+}
+
+.status-badge {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #a6adc8;
+  background: #181825;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #313244;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+}
+.status-dot.inactive {
+  background-color: #b91010;
+  box-shadow: 0 0 8px #b91010;
+}
+
+/* === Правая панель === */
+.content-panel {
+  overflow-y: auto;
+  transform: translateX(-200px);
+}
+
+.settings-section {
+  margin-bottom: 28px;
+}
+
+.section-title {
+  font-size: 16px;
+  color: #f3f4f6;
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #313244;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 13px;
+  color: #a6adc8;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.flex-1 { flex: 1; }
+.flex-3 { flex: 3; }
+
+.input-field {
+  background-color: #181825;
+  border: 1px solid #313244;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #f3f4f6;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-field:focus {
+  border-color:  var(--accent-purple);;
+}
+
+/* Переключатели и цвета */
+.color-picker {
+  display: flex;
+  gap: 12px;
+}
+
+.color-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--btn-color);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.color-btn.active {
+  border-color: #ffffff;
+  transform: scale(1.1);
+}
+
+.toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #181825;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #313244;
+}
+
+.toggle-title { font-size: 14px; color: #f3f4f6; }
+.toggle-desc { font-size: 12px; color: #6c7086; margin-top: 2px; }
+
+/* Кастомный тумблер */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #313244;
+  border-radius: 24px;
+  transition: .3s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .3s;
+}
+
+input:checked + .slider { background-color:  var(--accent-purple); }
+input:checked + .slider:before { transform: translateX(20px); }
+
+/* Кнопки */
+.actions-bar {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.btn-primary { background-color:  var(--accent-purple); color: white; }
+.btn-secondary { background-color: #313244; color: #cdd6f4; }
+.btn:hover { opacity: 0.9; }

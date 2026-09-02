@@ -1,0 +1,62 @@
+/* Контейнер кастомного контекстного меню */
+.right-click-menu {
+  min-width: 180px;
+  background: rgb(25, 25, 25); 
+  border-radius: 4px;
+  padding: 6px 0;
+  z-index: 99;                       
+  
+ 
+  display: flex;
+  flex-direction: column;
+  
+  
+  user-select: none; 
+}
+
+
+.menu-header {
+  padding: 6px 14px 8px 14px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #4f5b66;                      
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 4px;
+}
+
+
+.right-click-menu button {
+  width: 100%;                        
+  background: transparent;            
+  border: none;                        
+  outline: none;
+  padding: 8px 16px;
+  text-align: left;                   
+  color: #c5cdd8;                      
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  display: block;                      
+  transition: all 0.15s ease-in-out;   
+}
+
+
+.right-click-menu button:hover {
+  background: var(--accent-purple); 
+  color: rgb(255, 255, 255);                      
+  padding-left: 20px;                
+}
+
+.right-click-menu button:nth-of-type(3),
+.right-click-menu button:nth-of-type(4) {
+  color: #ff4a5a;                      
+}
+
+.right-click-menu button:nth-of-type(3):hover,
+.right-click-menu button:nth-of-type(4):hover {
+  background: rgba(255, 74, 90, 0.1);
+  color: #ff4a5a;
+  box-shadow: inset 2px 0 0 #ff4a5a;   
+}

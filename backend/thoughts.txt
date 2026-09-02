@@ -1,0 +1,73 @@
+Project Brief.
+We build a web application which allows it's users to manipulate remote pc's FS.
+It is designed to help users work with files and directories like in normal file manager.
+This application will provide a user-friendly way to creating, managing, changing permissions and deleting files and folders.
+
+Definitions.
+
+File
+Basically a file. fundamental unit of storage that contains data or information.
+
+Directory/folder
+An organizational unit on a computer. Can contain files or other folders or can be empty.
+
+User stories.
+
+As a user
+I want to add ssh connection using key or password credentials
+So that I can connect to my machine
+
+Acceptance criteria:
+1. A user can add a new connection to remote pc by specifying Host, Port, and Username.
+2. Each connection has a unique user-defined alias or name for easy identification.
+3. A user can choose the authentication method: either entering a password or uploading a private SSH key.
+4. The system validates the connection before saving; if the connection fails, it returns a clear error message.
+5. Saved connections are stored securely and displayed for quick access.
+
+As a user
+I want to be able to create files and directories and name them
+So that I can write data to remote machine and organize it.
+
+Acceptance criteria:
+1. A user can create a new file or directory in the currently opened remote directory.
+2. The application prompts the user to enter a valid name for the new file/directory.
+3. The system validates that the name doesn't contain forbidden characters and doesn't duplicate an existing item.
+4. Upon creation, the view refreshes automatically to display the new item.
+
+As a user
+I want to view the contents of a specific directory
+So that I can navigate through the remote file system hierarchy.
+
+Acceptance criteria:
+1. A user can click on a directory to open it and list its contents.
+2. The system displays basic metadata for each item like name, size, modification date, and permissions.
+3. The user can see the current absolute path and navigate back to parent directories.
+
+As a user
+I want to delete files and directories
+So that I can free up space and remove unwanted data from the remote machine.
+
+Acceptance criteria:
+1. A user can select files or directories and trigger the delete action.
+2. The system displays a confirmation dialog before performing a permanent deletion.
+3. If a directory is selected, the deletion is recursive.
+4. The system handles permission errors gracefully, informing the user if an item cannot be deleted.
+
+As a user
+I want to view and modify permissions for files and directories
+So that I can control access to my data on the remote machine.
+
+Acceptance criteria:
+1. A user can open the properties or permissions view of a selected file or folder.
+2. The system displays standard POSIX permissions or numerical notation like 755.
+3. A user can modify these permissions and save changes.
+4. The system executes the changes on the remote machine and shows a success or error notification.
+
+As a user
+I want to download files from the remote PC to my local device and upload local files to the remote PC
+So that I can transfer data between my local environment and the remote server.
+
+Acceptance criteria:
+1. A user can select a remote file and click download to save it via the browser.
+2. A user can upload a local file into the currently opened remote directory.
+3. The system displays a progress indicator for larger file transfers.
