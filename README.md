@@ -37,12 +37,10 @@
 
 ## 🏗 Архитектура проекта
 
-Приложение состоит из двух независимых сервисов :
+
+Проект разработан совместно [@R31tr0](https://github.com/R31tr0) (Frontend) и [@SaymonGrapes](https://github.com/SaymonGrapes) (Backend) и состоит из двух независимых сервисов:
 
 
-##Collaborators
-(@R31tr0) — Frontend
-(@SaymonGrapes) — Backend
 
 ```text
 remote-pc-hub/
