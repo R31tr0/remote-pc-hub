@@ -2,6 +2,11 @@ spring:
   application:
     name: RemotePcHub
 
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+      
   datasource:
     url: jdbc:postgresql://localhost:5431/postgres
     username: postgres
