@@ -47,6 +47,19 @@ const DashboardVisual = ({
  })  => {
 
 
+  const getLevel = (value) => {
+    const numericValue = Number.parseFloat(String(value ?? '').replace(',', '.'));
+    return Number.isFinite(numericValue)
+      ? Math.min(100, Math.max(10, Math.ceil(numericValue / 10) * 10))
+      : 0;
+  };
+
+  const pingLevel = getLevel(pcinfo.ping);
+  const storageLevel = getLevel(pcinfo.storage);
+  const pingCardClass = pingLevel ? `card-${pingLevel}` : '';
+  const storageCardClass = storageLevel ? `card-${storageLevel}` : '';
+
+
 return (
 
     
@@ -147,7 +160,7 @@ return (
             }}
           >
             {/* можно анимки вынести в отдельный варик типо верх в низ но лень */}
-            <m.div className="card stat-card" 
+            <m.div className={`card stat-card ${pingCardClass}`} 
             initial={{ opacity: 0,y:-100 }} 
             animate={{ opacity: 1,y:0 }} 
             transition={{ delay: 0.1 }}
@@ -155,7 +168,7 @@ return (
               <span className="card-label">Latency</span>
               <div className="card-value">{pcinfo.ping}</div>
             </m.div>
-            <m.div className="card stat-card" 
+            <m.div className={`card stat-card ${storageCardClass}`} 
             initial={{ opacity: 0,y:100 }} 
             animate={{ opacity: 1,y:0 }} 
             transition={{ delay: 0.4 }}
@@ -163,13 +176,7 @@ return (
               <span className="card-label">storage</span>
               <div className="card-value">{pcinfo.storage}</div>
             </m.div>
-            {/* <m.div className="card drop-zone" 
-            initial={{ opacity: 0,y:-100 }} 
-            animate={{ opacity: 1,y:0 }} 
-            transition={{ delay: 0.7 }}
-            >
-              <Upload size={48} className="upload-icon" />
-            </m.div> */}
+            
           <FileDragAndDrop
           currentPath={treeView ? treeActivePath : currentPath} 
           fetchFiles={fetchFiles}

@@ -16,6 +16,11 @@
     animation-duration: 0s !important;
     transition-duration: 0s !important;
   }
+
+  .stat-card::before,
+  .stat-card::after {
+    animation: none;
+  }
 }
 body {
   background-color: var(--bg-main);
@@ -120,6 +125,66 @@ body {
   border: 1px solid var(--border-color);
   transition: var(--transition);
 }
+
+.stat-card {
+  --fill-percent: 0%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--accent-purple) 42%, transparent) 0 var(--fill-percent),
+    var(--bg-surface) var(--fill-percent) 100%
+  );
+}
+
+.stat-card::before,
+.stat-card::after {
+  content: '';
+  position: absolute;
+  left: -25%;
+  bottom: calc(var(--fill-percent) - 18px);
+  width: 150%;
+  height: 42px;
+  border-radius: 48%;
+  pointer-events: none;
+  z-index: -1;
+  background: color-mix(in srgb, var(--accent-purple) 28%, transparent);
+  animation: stat-wave 5s ease-in-out infinite alternate;
+}
+
+.stat-card::after {
+  left: -35%;
+  bottom: calc(var(--fill-percent) - 28px);
+  opacity: 0.65;
+  animation-duration: 7s;
+  animation-direction: alternate-reverse;
+}
+
+.stat-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes stat-wave {
+  from {
+    transform: translateX(-6%) rotate(-2deg);
+  }
+  to {
+    transform: translateX(6%) rotate(2deg);
+  }
+}
+
+.stat-card.card-10 { --fill-percent: 10%; }
+.stat-card.card-20 { --fill-percent: 20%; }
+.stat-card.card-30 { --fill-percent: 30%; }
+.stat-card.card-40 { --fill-percent: 40%; }
+.stat-card.card-50 { --fill-percent: 50%; }
+.stat-card.card-60 { --fill-percent: 60%; }
+.stat-card.card-70 { --fill-percent: 70%; }
+.stat-card.card-80 { --fill-percent: 80%; }
+.stat-card.card-90 { --fill-percent: 90%; }
+.stat-card.card-100 { --fill-percent: 100%; }
 
 .card:hover {
   border-color: var(--accent-purple);
