@@ -30,6 +30,17 @@ const logError = useStore((state) => state.logError);
 const disconnectAndClearPc = useStore((state) => state.disconnectAndClearPc);
 
 useEffect(() => {
+    if (pcinfo.pc) {
+      api.get('/api/v1/ssh/stats')
+        .then(({ data }) => setPcInfo(data))
+        .catch((err) => {
+          logError({
+            error: `Failed to fetch SSH stats: ${err.response?.data?.message || err.message} at ${new Date().toLocaleString()}`,
+            type: 'Error'
+          });
+        });
+    }
+
     if (pcinfo.id) {
       console.log(`сессия (ID: ${pcinfo.id}), запрос файлов`);
       fetchFiles('/home'); // Читаем корневую директорию SSH сессии
@@ -45,7 +56,7 @@ useEffect(() => {
         });
       }
     }
-  }, [pcinfo.id,fetchFiles]);
+  }, [pcinfo.id, pcinfo.pc, fetchFiles, setPcInfo, logError]);
 
 //удаление
 const handledelete = async () => {

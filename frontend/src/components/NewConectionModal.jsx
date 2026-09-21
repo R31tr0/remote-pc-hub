@@ -89,13 +89,6 @@ const NewConectionModal = ({ onClose, onAdd, filesonadd }) => {
           }
           console.log('ПК успешно добавлен в базу:', response.data);
           logError({error: 'PC added successfully to database: ' + response.data.id + ' at ' + new Date().toLocaleString(), type: 'Success'});
-          setPcInfo({
-            pc: response.data.alias || pcdata.alias,
-            id: response.data.id,
-            ping: '—',
-            storage: '—',
-          });
-
           // Сразу дергаем SSH по ID
           try {
             const authPayload = {};
@@ -104,6 +97,11 @@ const NewConectionModal = ({ onClose, onAdd, filesonadd }) => {
 
             const connRes = await api.post(`/api/v1/ssh/connect/${response.data.id}`, authPayload);
             if (connRes.status === 200){ 
+              setPcInfo({
+                pc: response.data.alias || pcdata.alias,
+                id: response.data.id,
+                ...connRes.data,
+              });
               logError({
                 error: `SSH connection established for PC ID ${response.data.id} at ${new Date().toLocaleString()}`,
                 type: 'Success'
@@ -152,7 +150,7 @@ const NewConectionModal = ({ onClose, onAdd, filesonadd }) => {
         const response = await api.post('/api/v1/ssh/connect/direct', directPayload);
 
         if (response.status === 200) {
-          console.log('Прямое SSH подключение успешно:', response.data.message);
+          console.log('Прямое SSH подключение успешно:', response.data);
           logError({error:' Direct SSH connection established at ' + new Date().toLocaleString(), type: 'Success'});
            if (typeof filesonadd === 'function') {
               await filesonadd('.'); 
@@ -161,8 +159,7 @@ const NewConectionModal = ({ onClose, onAdd, filesonadd }) => {
           setPcInfo({
             pc: `Direct: ${pcdata.host}`,
             id: null, 
-            ping: '—',
-            storage: '—',
+            ...response.data,
           });
 
           onClose();

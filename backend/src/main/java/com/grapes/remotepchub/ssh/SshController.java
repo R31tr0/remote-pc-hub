@@ -37,8 +37,8 @@ public class SshController {
         try {
             Session session = sshService.connect(request.getUsername(), request.getPassword(), request.getHost(), request.getPort());
             sessionManager.addSession(user.getName(), session);
-            return ResponseEntity.ok().body("Connection successful");
-        } catch (JSchException e) {
+            return ResponseEntity.ok(sshService.getStats(session));
+        } catch (JSchException | IOException e) {
             return ResponseEntity.badRequest().body("Connection failed: " + e.getMessage());
         }
     }
@@ -55,9 +55,20 @@ public class SshController {
         try {
             Session session = sshService.connectWithPc(pc, request.getPassword(), request.getPrivateKey());
             sessionManager.addSession(user.getName(), session);
-            return ResponseEntity.ok().body("Connection successful");
-        } catch (JSchException e) {
+            return ResponseEntity.ok(sshService.getStats(session));
+        } catch (JSchException | IOException e) {
             return ResponseEntity.badRequest().body("Connection failed: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<?> stats() {
+        User user = authService.getCurrentUser();
+        try {
+            Session session = sessionManager.getActiveSession(user.getName());
+            return ResponseEntity.ok(sshService.getStats(session));
+        } catch (JSchException | IOException e) {
+            return ResponseEntity.internalServerError().body("Failed to read SSH stats: " + e.getMessage());
         }
     }
 

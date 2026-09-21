@@ -6,8 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -48,6 +51,50 @@ public class SshService {
             return connectWithKey(pc.getUsername(), privateKey, pc.getHost(), pc.getPort());
         } else {
             return connect(pc.getUsername(), password, pc.getHost(), pc.getPort());
+        }
+    }
+
+    public SshStatsDto getStats(Session session) throws JSchException, IOException {
+        return new SshStatsDto(measurePing(session), readStorage(session));
+    }
+
+    private String measurePing(Session session) {
+        long startedAt = System.nanoTime();
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress(session.getHost(), session.getPort()), 2000);
+            long elapsedMillis = (System.nanoTime() - startedAt) / 1_000_000;
+            return elapsedMillis + " ms";
+        } catch (IOException e) {
+            return "—";
+        }
+    }
+
+    private String readStorage(Session session) throws JSchException, IOException {
+        ChannelExec channel = (ChannelExec) session.openChannel("exec");
+        channel.setCommand("df -hP /");
+        channel.setInputStream(null);
+
+        try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+            channel.setOutputStream(output);
+            channel.connect(5000);
+            while (!channel.isClosed()) {
+                try {
+                    Thread.sleep(25);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new IOException("Interrupted while reading storage", e);
+                }
+            }
+
+            String[] lines = output.toString().trim().split("\\R");
+            if (lines.length < 2) {
+                return "—";
+            }
+
+            String[] columns = lines[lines.length - 1].trim().split("\\s+");
+            return columns.length >= 5 ? columns[4] : "—";
+        } finally {
+            channel.disconnect();
         }
     }
 
