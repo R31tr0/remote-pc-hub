@@ -20,6 +20,46 @@
 
 ---
 
+## 👀 Обзор интерфейса
+
+### Главная страница
+
+![Главная страница](frontend/src/assets/readme/main.png)
+
+### Древовидное отображение файлов
+
+![Древовидное отображение файлов](frontend/src/assets/readme/maintree.png)
+
+### Список удаленных компьютеров
+
+![Список удаленных компьютеров](frontend/src/assets/readme/list.png)
+
+### Журнал событий
+
+![Журнал событий](frontend/src/assets/readme/logs.png)
+
+### Страница журнала
+
+![Страница журнала](frontend/src/assets/readme/logpage.png)
+
+### Регистрация
+
+![Страница регистрации](frontend/src/assets/readme/regpage.png)
+
+### Настройки
+
+![Настройки](frontend/src/assets/readme/settings.png)
+
+### Варианты оформления настроек
+
+![Настройки в розовом оформлении](frontend/src/assets/readme/settingspink.png)
+
+![Настройки в зеленом оформлении](frontend/src/assets/readme/settingsgreen.png)
+
+![Настройки в синем оформлении](frontend/src/assets/readme/settingsblue.png)
+
+---
+
 ## 🛠 Технологический стек
 
 ### Frontend
