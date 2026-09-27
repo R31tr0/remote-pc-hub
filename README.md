@@ -26,11 +26,11 @@
 
 ![Главная страница](frontend/src/assets/readme/main.png)
 
-### Древовидное отображение файлов
+### Главная страница c древовидными файлами
 
 ![Древовидное отображение файлов](frontend/src/assets/readme/maintree.png)
 
-### Список удаленных компьютеров
+### Список  компьютеров
 
 ![Список удаленных компьютеров](frontend/src/assets/readme/list.png)
 
@@ -38,7 +38,7 @@
 
 ![Журнал событий](frontend/src/assets/readme/logs.png)
 
-### Страница журнала
+### вход
 
 ![Страница журнала](frontend/src/assets/readme/logpage.png)
 
