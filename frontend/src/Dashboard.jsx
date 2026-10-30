@@ -60,15 +60,7 @@ useEffect(() => {
 
 //удаление
 const handledelete = async () => {
-  const isDeleted = await disconnectAndClearPc();
-  
-  if (isDeleted.success) {
-    alert('заебись удалилось');
-    logError({ error: 'Files deleted successfully', type: 'Success' });
-  } else {
-    alert('чота ни удаляеца проверь консоль');
-    logError({ error: `Failed to delete files: ${isDeleted.error}`, type: 'Error' });
-  }
+  return disconnectAndClearPc();
 };
 // модалка
 const handleClose = () => setOpen(false);

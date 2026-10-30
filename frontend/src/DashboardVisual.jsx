@@ -1,30 +1,12 @@
-import React, { useState,useEffect } from 'react';
 import './styles/Dashboard.css'
-import { Settings, Monitor, RefreshCw, Upload, List } from 'lucide-react';
+import { Monitor, Menu, ListFilter, Sun } from 'lucide-react';
 import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useStore } from './store';
 import NewConectionModal from './components/NewConectionModal';
-import api from './axiosapi/api';
-import { useSshFiles } from './hooks/useSshFiles';
+import ConfirmDeleteButton from './components/ConfirmDeleteButton';
 import FileManager from './components/FileManager';
 import FileTree from './components/TreeView';
 import FileDragAndDrop from './components/FileDragAndDrop'
-
-
-const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  };
-
-   const itemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0 }
-  };
 
 const DashboardVisual = ({ 
 
@@ -45,8 +27,6 @@ const DashboardVisual = ({
   handleClose,
   handledelete,
  })  => {
-
-
   const getLevel = (value) => {
     const numericValue = Number.parseFloat(String(value ?? '').replace(',', '.'));
     return Number.isFinite(numericValue)
@@ -58,7 +38,6 @@ const DashboardVisual = ({
   const storageLevel = getLevel(pcinfo.storage);
   const pingCardClass = pingLevel ? `card-${pingLevel}` : '';
   const storageCardClass = storageLevel ? `card-${storageLevel}` : '';
-
 
 return (
 
@@ -86,7 +65,7 @@ return (
           >Dashboard</m.span>
         </div>
         <Link to="/list" className="nav-item">
-          <span className="icon"><List size={32} color="gray" /></span>
+          <span className="icon"><Menu size={32} color="gray" /></span>
           <m.span className="label"
            initial={{ opacity: 0, x: -20 }} 
            animate={{ opacity: 1, x: 0 }}
@@ -94,7 +73,7 @@ return (
            >list</m.span>
         </Link>
         <Link to="/logs" className="nav-item">
-          <span className="icon"><RefreshCw size={32} color="gray" /></span>
+          <span className="icon"><ListFilter size={32} color="gray" /></span>
           <m.span className="label"
            initial={{ opacity: 0, x: -20 }} 
            animate={{ opacity: 1, x: 0 }}
@@ -102,7 +81,7 @@ return (
            >Logs</m.span>
         </Link>
         <Link to="/settings" className="nav-item">
-          <span className="icon"><Settings size={32} color="gray" /></span>
+          <span className="icon"><Sun size={32} color="gray" /></span>
           <m.span className="label"
            initial={{ opacity: 0, x: -20 }} 
            animate={{ opacity: 1, x: 0 }}
@@ -213,12 +192,12 @@ return (
       </select>
     </div>
   </div>
-  <div>
-    <m.button
-      className="deletebutton"
-      onClick={handledelete}
-    >delete current conection</m.button>
-  </div>
+  <ConfirmDeleteButton
+    onConfirm={handledelete}
+    title="Удалить подключение?"
+    description={`Подключение будет завершено${pcinfo.id ? ', а сохранённый компьютер удалён из списка' : ''}. Это действие нельзя отменить.`}
+    ariaLabel="Удалить подключение"
+  />
   
 </section>
 

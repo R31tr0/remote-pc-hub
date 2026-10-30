@@ -1,6 +1,6 @@
 import React from 'react';
 import { m } from 'framer-motion';
-import { Settings, Monitor, RefreshCw, Upload, List, Bug } from 'lucide-react';
+import { Monitor, Menu, ListFilter, Sun, Bug } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import '../src/styles/logs.css';
 import { useStore } from './store';
@@ -49,7 +49,7 @@ const Logs = () => {
             </m.span>
           </Link>
           <Link to="/list" className="nav-item">
-            <span className="icon"><List size={32} color="gray" /></span>
+            <span className="icon"><Menu size={32} color="gray" /></span>
             <m.span className="label"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -59,7 +59,7 @@ const Logs = () => {
             </m.span>
           </Link>
           <Link to="/logs" className="nav-item active">
-            <span className="icon"><RefreshCw size={32} color="gray" /></span>
+            <span className="icon"><ListFilter size={32} color="gray" /></span>
             <m.span className="label"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -69,7 +69,7 @@ const Logs = () => {
             </m.span>
           </Link>
           <Link to="/settings" className="nav-item">
-            <span className="icon"><Settings size={32} color="gray" /></span>
+            <span className="icon"><Sun size={32} color="gray" /></span>
             <m.span className="label"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -83,7 +83,7 @@ const Logs = () => {
         
       </m.aside>
 
-      <main className="main-content" style={{ padding: '40px' }}>
+      <main className="main-content page-main-content" style={{ padding: '40px' }}>
         <header className="top-bar" style={{ justifyContent: 'space-between' }}>
           <div>
             <span className="separator">/ </span>

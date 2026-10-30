@@ -17,7 +17,7 @@
   left: 0;
   right: 0;
   height: 30vh; 
-  background: linear-gradient(to top, var(--accent-purple), transparent);
+  /* background: linear-gradient(to top, var(--accent-purple), transparent); */
   opacity: 0.7;
   filter: blur(40px); 
   pointer-events: none; 

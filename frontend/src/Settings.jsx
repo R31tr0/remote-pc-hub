@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './styles/settings.css'
-import { Settings, Monitor, RefreshCw, Upload, List, Bug } from 'lucide-react';
+import { Monitor, Menu, ListFilter, Sun } from 'lucide-react';
 import { useStore, DEFAULT_COLOR } from './store';
 
 const colors = ['#8b5cf6', '#3b82f6', '#ec4899', '#10b981'];
@@ -87,19 +87,19 @@ const Settingspage = () => {
             </m.span>
           </Link>
           <Link to="/list" className="nav-item">
-            <span className="icon"><List size={32} color="gray" /></span>
+            <span className="icon"><Menu size={32} color="gray" /></span>
             <m.span className="label" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.7 }}>
               List
             </m.span>
           </Link>
           <Link to="/logs" className="nav-item">
-            <span className="icon"><RefreshCw size={32} color="gray" /></span>
+            <span className="icon"><ListFilter size={32} color="gray" /></span>
             <m.span className="label" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.8 }}>
               Logs
             </m.span>
           </Link>
           <Link to="/settings" className="nav-item active">
-            <span className="icon"><Settings size={32} color="gray" /></span>
+            <span className="icon"><Sun size={32} color="gray" /></span>
             <m.span className="label" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.9 }}>
               Settings
             </m.span>
@@ -107,7 +107,7 @@ const Settingspage = () => {
         </nav>
       </m.aside>
 
-      <main className="main-content" style={{ padding: '40px' }}>
+      <main className="main-content page-main-content" style={{ padding: '40px' }}>
         <header className="top-bar" style={{ justifyContent: 'space-between' }}>
           <div>
             <span className="separator">/ </span>

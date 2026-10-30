@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Settings, Monitor, RefreshCw, Upload, List, ArrowRight, Trash2 } from 'lucide-react';
+import { Monitor, Menu, ListFilter, Sun, ArrowRight } from 'lucide-react';
 import { m } from 'framer-motion';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import api from './axiosapi/api';
 import { useStore } from './store';
 import NewConectionModal from './components/NewConectionModal';
+import ConfirmDeleteButton from './components/ConfirmDeleteButton';
 import './styles/Dashboard.css';
 
 
@@ -30,8 +31,8 @@ const PcList = () => {
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState('');
-  const files = useStore((state) => state.files);
   const setPcPassword = useStore((state) => state.setPcPassword);
+  const setFiles = useStore((state) => state.setFiles);
   const pcPasswords = useStore((state) => state.pcPasswords);
   const pcinfo = useStore((state) => state.pcinfo);
   const setPcInfo = useStore((state) => state.setPcInfo);
@@ -175,27 +176,30 @@ setIsInitializing(false);
   };
 
   const handleDelete = async () => {
-    if (!selectedPc) return;
+    if (!selectedPc) {
+      return { success: false, error: 'Сначала выберите компьютер.' };
+    }
     try {
-      if (pcPasswords[selectedPc.id]) {
-        setPcPassword(selectedPc.id, undefined);
-      }
-      files.length = 0; // Очистка файлов при удалении ПК
       await api.delete(`/api/v1/pcs/${selectedPc.id}`);
       if (pcinfo.id === selectedPc.id) {
         await api.post('/api/v1/ssh/disconnect');
         setPcInfo({ pc: '', id: null, ping: '', storage: '' });
-       console.log('Disconnected from PC after deletion:', selectedPc.id);
-       logError({error: 'Disconnected from PC after deletion:' + selectedPc.id + ' at ' + new Date().toLocaleString(), type: 'Success'});
+        console.log('Disconnected from PC after deletion:', selectedPc.id);
+        logError({error: 'Disconnected from PC after deletion:' + selectedPc.id + ' at ' + new Date().toLocaleString(), type: 'Success'});
       }
+      if (pcPasswords[selectedPc.id]) setPcPassword(selectedPc.id, undefined);
+      setFiles([]);
       setSelectedPc(null);
       setStatus('ПК удалён');
       logError({error: 'PC deleted successfully: ' + selectedPc.id + ' at ' + new Date().toLocaleString(), type: 'Success'});
       await loadPcs();
+      return { success: true };
     } catch (err) {
-      console.error('Ошибка удаления ПК:', err.response?.data?.message || err.message);
+      const message = err.response?.data?.message || err.message;
+      console.error('Ошибка удаления ПК:', message);
       setStatus('Не удалось удалить ПК');
-      logError({error: 'Failed to delete PC: ' + (err.response?.data?.message || err.message) + ' at ' + new Date().toLocaleString(), type: 'Error'});
+      logError({error: 'Failed to delete PC: ' + message + ' at ' + new Date().toLocaleString(), type: 'Error'});
+      return { success: false, error: message || 'Не удалось удалить ПК.' };
     }
   };
 
@@ -225,7 +229,7 @@ setIsInitializing(false);
             </m.span>
           </Link>
           <Link to="/list" className="nav-item active">
-            <span className="icon"><List size={32} color="gray" /></span>
+            <span className="icon"><Menu size={32} color="gray" /></span>
             <m.span className="label"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -235,7 +239,7 @@ setIsInitializing(false);
             </m.span>
           </Link>
           <Link to="/logs" className="nav-item">
-            <span className="icon"><RefreshCw size={32} color="gray" /></span>
+            <span className="icon"><ListFilter size={32} color="gray" /></span>
             <m.span className="label"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -245,7 +249,7 @@ setIsInitializing(false);
             </m.span>
           </Link>
           <Link to="/settings" className="nav-item">
-            <span className="icon"><Settings size={32} color="gray" /></span>
+            <span className="icon"><Sun size={32} color="gray" /></span>
             <m.span className="label"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -259,7 +263,7 @@ setIsInitializing(false);
         
       </m.aside>
 
-      <main className="main-content" style={{ padding: '40px' }}>
+      <main className="main-content page-main-content" style={{ padding: '40px' }}>
         <header className="top-bar" style={{ justifyContent: 'space-between' }}>
           <div>
             <span className="separator">/ </span>
@@ -279,9 +283,10 @@ setIsInitializing(false);
         </header>
         {open && <NewConectionModal onClose={() => setOpen(false)} onAdd={loadPcs} />}
 
-        <section className="file-section" style={{ margin: '40px', padding: '0' }}>
-          <div className="file-section-header">
-            <h2 className="section-title">Added PCs</h2>
+        <section className="pc-list-panel">
+          <div className="pc-list-panel-header">
+            <h2>Added PCs</h2>
+            {!loading && <span className="pc-list-count">{pcs.length}</span>}
           </div>
 
           {error && <div className="error-message">{error}</div>}
@@ -291,53 +296,54 @@ setIsInitializing(false);
           ) : pcs.length === 0 ? (
             <div className="empty-state">No added PCs yet. Click "New Connection" to add one.</div>
           ) : (
-            <m.div className="file-grid" variants={containerVariants} initial="hidden" animate="visible">
+            <m.div className="pc-list-grid" variants={containerVariants} initial="hidden" animate="visible">
               {pcs.map((pc) => (
-                <m.div
+                <m.button
                   key={pc.id}
-                  className={`file-item pc-card ${selectedPc?.id === pc.id ? 'active' : ''}`}
+                  type="button"
+                  className={`pc-list-entry ${selectedPc?.id === pc.id ? 'active' : ''}`}
                   onClick={() => handleSelectPc(pc)}
                   variants={itemVariants}
                   whileHover={{ y: -3 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <h3>{pc.alias}</h3>
-                  <p>{pc.host}:{pc.port}</p>
-                  <p>{pc.username}</p>
-                </m.div>
+                  <span className="pc-list-entry-name">{pc.alias}</span>
+                  <span>{pc.host}:{pc.port}</span>
+                  <span>{pc.username}</span>
+                </m.button>
               ))}
             </m.div>
           )}
 
           {selectedPc && (
             <m.div
-              className="card pc-detail-card"
+              className="pc-detail-card"
               variants={itemVariants}
               initial="hidden"
               animate="visible"
               transition={{ delay: 0.1 }}
-              style={{ marginTop: '24px' }}
             >
-              <h2>Данные ПК</h2>
-              <p><strong>Alias:</strong> {selectedPc.alias}</p>
-              <p><strong>Host:</strong> {selectedPc.host}</p>
-              <p><strong>Port:</strong> {selectedPc.port}</p>
-              <p><strong>Username:</strong> {selectedPc.username}</p>
+              <div className="pc-detail-heading">
+                <h2>Данные ПК</h2>
+                <span>{selectedPc.alias}</span>
+              </div>
+              <div className="pc-detail-fields">
+                <p><strong>Host</strong><span>{selectedPc.host}</span></p>
+                <p><strong>Port</strong><span>{selectedPc.port}</span></p>
+                <p><strong>Username</strong><span>{selectedPc.username}</span></p>
+              </div>
 
               <div className="detail-actions">
-                <m.button className="btn-primary" onClick={handleConnect} disabled={isInitializing || !selectedPc}  whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }} style={{ marginRight: '20px' }}>
-                  <ArrowRight size={16} style={{ marginRight: '8px' }} />
-                  connect
+                <m.button className="btn-primary" onClick={handleConnect} disabled={isInitializing || !selectedPc} whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
+                  <ArrowRight size={16} />
+                  
                 </m.button>
-                <m.button className="deletebutton" 
-                onClick={handleDelete}
-                initial={{ opacity: 0 ,x:50 ,pointerEvents: 'none'  }} 
-                animate={{ opacity: 1 ,x:-50, pointerEvents: 'auto'}}
-                transition={{ delay: 2 }}
-               >
-                  <Trash2 size={16} style={{ marginRight: '8px' }} />
-                  delete
-                </m.button>
+                <ConfirmDeleteButton
+                  onConfirm={handleDelete}
+                  title="Удалить компьютер?"
+                  description={`Компьютер «${selectedPc.alias}» будет удалён из списка.${pcinfo.id === selectedPc.id ? ' Текущее SSH-подключение также будет завершено.' : ''} Это действие нельзя отменить.`}
+                  ariaLabel={`Удалить компьютер ${selectedPc.alias}`}
+                />
               </div>
               {status && <div style={{ marginTop: '16px', color: '#cbd5e1' }}>{status}</div>}
             </m.div>

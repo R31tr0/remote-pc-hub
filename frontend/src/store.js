@@ -89,7 +89,10 @@ export const useStore = create(
             type: 'Error'
           });
 
-          return { success: false }; 
+          return {
+            success: false,
+            error: err.response?.data?.message || err.message || 'Не удалось удалить подключение',
+          };
         }
       },
       files: [],

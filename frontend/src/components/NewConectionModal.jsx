@@ -246,18 +246,18 @@ const NewConectionModal = ({ onClose, onAdd, filesonadd }) => {
               variants={fieldVariants}
               initial="hidden" animate="visible" exit="hidden"
               placeholder="Название ПК" 
-              className="custom-select" 
+              className="connection-input" 
               value={pcdata.alias} 
               onChange={(e) => setpcdata({...pcdata, alias: e.target.value})} 
-              style={{width: '100%', border: '1px solid var(--accent-purple)', marginBottom: '10px'}} 
+              style={{width: '100%', marginBottom: '10px'}} 
             />
           )}
         </AnimatePresence>
 
-        <m.input type="text" variants={fieldVariants} placeholder="IP Хоста (192.168.1.100)" className="custom-select" value={pcdata.host} onChange={(e) => setpcdata({...pcdata, host: e.target.value})} style={{width: '100%', border: '1px solid var(--accent-purple)'}} />
-        <m.input type="text" variants={fieldVariants} placeholder="Порт (22)" className="custom-select" value={pcdata.port} onChange={(e) => setpcdata({...pcdata, port: e.target.value})} style={{width: '100%', border: '1px solid var(--accent-purple)'}} />
-        <m.input type="text" variants={fieldVariants} placeholder="Имя пользователя (user)" className="custom-select" value={pcdata.username} onChange={(e) => setpcdata({...pcdata, username: e.target.value})} style={{width: '100%', border: '1px solid var(--accent-purple)'}} />
-          <m.input type="password" variants={fieldVariants} placeholder={mode === 'direct' ? "Пароль (обязательно)" : "Пароль (опционально)"} className="custom-select" value={pcdata.password} onChange={(e) => setpcdata({...pcdata, password: e.target.value})} style={{width: '100%', border: '1px solid var(--accent-purple)'}} />
+        <m.input type="text" variants={fieldVariants} placeholder="IP Хоста (192.168.1.100)" className="connection-input" value={pcdata.host} onChange={(e) => setpcdata({...pcdata, host: e.target.value})} style={{width: '100%'}} />
+        <m.input type="text" variants={fieldVariants} placeholder="Порт (22)" className="connection-input" value={pcdata.port} onChange={(e) => setpcdata({...pcdata, port: e.target.value})} style={{width: '100%'}} />
+        <m.input type="text" variants={fieldVariants} placeholder="Имя пользователя (user)" className="connection-input" value={pcdata.username} onChange={(e) => setpcdata({...pcdata, username: e.target.value})} style={{width: '100%'}} />
+          <m.input type="password" variants={fieldVariants} placeholder={mode === 'direct' ? "Пароль (обязательно)" : "Пароль (опционально)"} className="connection-input" value={pcdata.password} onChange={(e) => setpcdata({...pcdata, password: e.target.value})} style={{width: '100%'}} />
           
         <AnimatePresence mode="wait">
           {mode === 'save' && (
@@ -266,10 +266,10 @@ const NewConectionModal = ({ onClose, onAdd, filesonadd }) => {
               variants={fieldVariants} 
               initial="hidden" animate="visible" exit="hidden"
               placeholder="--BEGIN RSA PRIVATE KEY-- (опционально)" 
-              className="custom-select" 
+              className="connection-input" 
               value={pcdata.privateKey} 
               onChange={(e) => setpcdata({...pcdata, privateKey: e.target.value})} 
-              style={{width: '100%', minHeight: '100px', border: '1px solid var(--accent-purple)', marginBottom: '10px'}} 
+              style={{width: '100%', minHeight: '100px', marginBottom: '10px'}} 
             />
           )}
         </AnimatePresence>
