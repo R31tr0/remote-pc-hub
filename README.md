@@ -50,13 +50,7 @@
 
 ![Настройки](frontend/src/assets/readme/settings.png)
 
-### Варианты оформления настроек
 
-![Настройки в розовом оформлении](frontend/src/assets/readme/settingspink.png)
-
-![Настройки в зеленом оформлении](frontend/src/assets/readme/settingsgreen.png)
-
-![Настройки в синем оформлении](frontend/src/assets/readme/settingsblue.png)
 
 ---
 
